@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +20,56 @@ namespace progettoCD
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        
+        int mintemp=5;
+        Brano p;
+        int tot = 0;
+        string lista = "Temi del cidi ";
+        private void btnInserisci_Click(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
+            string titolo = txttitolo.Text;
+            lista = lista + titolo;
+            string au = txtnome.Text;
+            int dura = int.Parse(txtdurata.Text);
+            tot = tot + dura;
+            p = new Brano(titolo, au, dura);
+            bool stato = false;
+            stato = p.ShortSong(mintemp);
+            if (stato != true)
+            {
+                MessageBox.Show("Tempo inserito superiore a quello concesso");
+            }
+            else
+            {
+            lstbrani.Items.Add("titolo " + titolo + " ," + " autore " + au + " , durata  " + dura);
+            
+
+               
+            }
+          
+            
+        }
+       
+
+        private void btnCrea_Click(object sender, RoutedEventArgs e)
+        {
+            
+            lstcd.Items.Add("The CD " + txtcd.Text + " created by " + txtnomecreatore.Text + " sponsored by " + txtetichetta.Text +"|| durata totale disco "+ tot );
+           
+        }
+
+        private void lstcd_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+             if(lstcd.SelectedItem!=null)
+            {
+                btnInserisci.IsEnabled = true;
+
+            }
+        }
+
+        private void btnlista_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("" + lista);
         }
     }
 }
